@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#080808">
+  <link rel="canonical" href="https://shopgithub.io/">
+  <meta property="og:url" content="https://shopgithub.io/">
+  <meta property="og:title" content="Vân Nhâm Shop">
+  <meta property="og:description" content="Roblox Studio Official · Vật phẩm, UI/UX, code Lua & hiệu ứng game">
+  <title>Vân Nhâm Shop | Link trong bio</title>
+  <style>
+    :root {
+      --bg: #080808;
+      --card: rgba(255, 255, 255, 0.08);
+      --card-hover: rgba(255, 255, 255, 0.15);
+      --text: #ffffff;
+      --muted: #c4c4c4;
+      --pink: #ffffff;
+      --purple: #888888;
+      --cyan: #d9d9d9;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      min-width: 320px;
+      overflow-x: hidden;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 15% 10%, rgba(255, 255, 255, 0.1), transparent 28rem),
+        radial-gradient(circle at 85% 30%, rgba(190, 190, 190, 0.07), transparent 24rem),
+        linear-gradient(160deg, #222222 0%, var(--bg) 58%, #000000 100%);
+      font-family: "Segoe UI", Tahoma, sans-serif;
+    }
+
+    body::before,
+    body::after {
+      content: "";
+      position: fixed;
+      z-index: -1;
+      width: 260px;
+      height: 260px;
+      border: 1px solid rgba(255,255,255,.06);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    body::before { left: -150px; bottom: -80px; box-shadow: 0 0 0 50px rgba(255,255,255,.025), 0 0 0 100px rgba(255,255,255,.018); }
+    body::after { right: -130px; top: 100px; box-shadow: 0 0 0 45px rgba(255,255,255,.025), 0 0 0 90px rgba(255,255,255,.018); }
+
+    .page {
+      width: min(430px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 52px 0 32px;
+      text-align: center;
+    }
+
+    .avatar-wrap {
+      position: relative;
+      width: 104px;
+      height: 104px;
+      margin: 0 auto 18px;
+      padding: 5px;
+      border-radius: 32px;
+      background: linear-gradient(135deg, #ffffff, #777777 55%, #111111);
+      box-shadow: 0 18px 48px rgba(7, 5, 30, 0.48);
+      transform: rotate(-3deg);
+    }
+
+    .avatar {
+      display: grid;
+      width: 100%;
+      height: 100%;
+      place-items: center;
+      border: 4px solid #111111;
+      border-radius: 27px;
+      background: linear-gradient(145deg, #333333, #080808);
+      font-size: 58px;
+      transform: rotate(3deg);
+      overflow: hidden;
+    }
+
+    .avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform: rotate(3deg) scale(1.12);
+    }
+
+    .status {
+      position: absolute;
+      right: -3px;
+      bottom: 5px;
+      width: 21px;
+      height: 21px;
+      border: 4px solid #111111;
+      border-radius: 50%;
+      background: #ffffff;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 29px;
+      line-height: 1.15;
+      letter-spacing: -0.03em;
+    }
+
+    .handle {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin: 8px 0 12px;
+      color: #e2e2e2;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .handle .check {
+      display: inline-grid;
+      width: 17px;
+      height: 17px;
+      place-items: center;
+      border-radius: 50%;
+      background: #777777;
+      color: white;
+      font-size: 11px;
+    }
+
+    .bio {
+      max-width: 360px;
+      margin: 0 auto 24px;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.55;
+    }
+
+    .music-player {
+      display: flex;
+      width: 100%;
+      align-items: center;
+      gap: 12px;
+      margin: 0 0 18px;
+      padding: 11px 14px;
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 16px;
+      background: rgba(255,255,255,.065);
+      color: var(--text);
+      text-align: left;
+      cursor: pointer;
+      font: inherit;
+    }
+
+    .music-player:hover { background: var(--card-hover); }
+
+    .guide-player {
+      margin-top: -8px;
+      border-color: rgba(255,255,255,.18);
+      background: rgba(255,255,255,.045);
+    }
+
+    .guide-player .music-icon {
+      background: linear-gradient(135deg, #777777, #222222);
+    }
+
+    .music-icon {
+      display: grid;
+      width: 40px;
+      height: 40px;
+      flex: 0 0 40px;
+      place-items: center;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--purple), var(--pink));
+      font-size: 19px;
+    }
+
+    .music-copy { min-width: 0; flex: 1; }
+    .music-copy strong { display: block; font-size: 13px; }
+    .music-copy span { display: block; margin-top: 2px; color: var(--muted); font-size: 11px; }
+    .music-action { color: #ddd9ef; font-size: 12px; font-weight: 800; }
+
+    .links {
+      display: grid;
+      gap: 12px;
+    }
+
+    .link-card {
+      display: grid;
+      grid-template-columns: 44px 1fr 30px;
+      align-items: center;
+      min-height: 68px;
+      padding: 10px 12px;
+      border: 1px solid rgba(255,255,255,.11);
+      border-radius: 18px;
+      background: var(--card);
+      color: var(--text);
+      box-shadow: 0 12px 30px rgba(7, 5, 30, 0.18);
+      text-decoration: none;
+      text-align: left;
+      backdrop-filter: blur(12px);
+      transition: transform .18s ease, background .18s ease, border-color .18s ease;
+      cursor: pointer;
+      font: inherit;
+    }
+
+    .link-card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(255,255,255,.22);
+      background: var(--card-hover);
+    }
+
+    .link-card.featured {
+      border-color: rgba(255,255,255,.16);
+      background: linear-gradient(135deg, rgba(255,255,255,.2), rgba(100,100,100,.18));
+    }
+
+    .icon {
+      display: grid;
+      width: 44px;
+      height: 44px;
+      place-items: center;
+      border-radius: 13px;
+      background: rgba(255,255,255,.12);
+      font-size: 23px;
+    }
+
+    .link-copy {
+      min-width: 0;
+      padding: 0 12px;
+    }
+
+    .link-copy strong {
+      display: block;
+      font-size: 15px;
+    }
+
+    .link-copy span {
+      display: block;
+      margin-top: 2px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .arrow {
+      color: #ddd9ef;
+      font-size: 18px;
+      transition: transform .18s ease;
+    }
+
+    .link-card:hover .arrow { transform: translateX(3px); }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin: 22px 0 14px;
+    }
+
+    .stat {
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 14px;
+      background: rgba(255,255,255,.045);
+      padding: 11px 5px;
+    }
+
+    .shop-section {
+      scroll-margin-top: 24px;
+      margin-top: 18px;
+      padding: 14px;
+      border: 1px solid rgba(255,255,255,.09);
+      border-radius: 20px;
+      background: #08080d;
+      text-align: left;
+    }
+
+    .shop-heading {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      margin: 0 2px 12px;
+    }
+
+    .shop-heading h2 {
+      margin: 0;
+      font-size: 20px;
+    }
+
+    .shop-heading span {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .shop-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .shop-card {
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,.09);
+      border-radius: 16px;
+      background: #111116;
+      box-shadow: 0 12px 28px rgba(7, 5, 30, 0.14);
+    }
+
+    .shop-cover {
+      display: grid;
+      min-height: 84px;
+      place-items: center;
+      background:
+        radial-gradient(circle at 50% 80%, rgba(255,255,255,.25), transparent 34%),
+        linear-gradient(135deg, var(--a), var(--b));
+      font-size: 42px;
+    }
+
+    .shop-info {
+      padding: 11px;
+    }
+
+    .shop-info strong {
+      display: block;
+      min-height: 38px;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .shop-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+      margin-top: 8px;
+    }
+
+    .shop-price {
+      color: #ffffff;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .shop-order {
+      border: 0;
+      border-radius: 9px;
+      background: #ffffff;
+      color: #111111;
+      padding: 7px 8px;
+      font-size: 11px;
+      font-weight: 900;
+      text-decoration: none;
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 16px;
+    }
+
+    .stat span {
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    footer {
+      margin-top: 24px;
+      color: #918dab;
+      font-size: 12px;
+    }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 24px;
+      z-index: 10;
+      transform: translate(-50%, 20px);
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 999px;
+      background: #222222;
+      padding: 11px 16px;
+      opacity: 0;
+      pointer-events: none;
+      box-shadow: 0 12px 36px rgba(0,0,0,.28);
+      transition: .25s ease;
+      white-space: nowrap;
+    }
+
+    .toast.show { transform: translate(-50%, 0); opacity: 1; }
+
+    @media (max-width: 480px) {
+      .page { padding-top: 38px; }
+      .avatar-wrap { width: 92px; height: 92px; border-radius: 28px; }
+      .avatar { border-radius: 23px; font-size: 52px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <div class="avatar-wrap" aria-label="Vân Nhâm Shop">
+      <div class="avatar"><img src="vnham-logo.png" alt="VNHAM logo"></div>
+      <span class="status" title="Đang hoạt động"></span>
+    </div>
+
+    <h1>Vân Nhâm Shop</h1>
+    <div class="handle">@vnham.shop <span class="check">✓</span></div>
+    <p class="bio">Roblox Studio Official · Vật phẩm, UI/UX, code Lua & hiệu ứng game</p>
+
+    <audio id="themeAudio" src="vnham-theme.mp3" preload="none" loop></audio>
+    <button class="music-player" type="button" id="musicToggle" aria-pressed="false">
+      <span class="music-icon" aria-hidden="true">♫</span>
+      <span class="music-copy">
+        <strong>Mở Lòng Vì Ai</strong>
+        <span id="musicStatus" role="status">Thazh x Đông Remix · Nhấn để phát</span>
+      </span>
+      <span class="music-action" id="musicAction" aria-hidden="true">▶ Phát</span>
+    </button>
+    <button class="music-player guide-player" type="button" id="guideToggle" aria-pressed="false">
+      <span class="music-icon" aria-hidden="true">🗣️</span>
+      <span class="music-copy">
+        <strong>Nghe hướng dẫn</strong>
+        <span id="guideStatus" role="status">“Xin chào, bạn muốn tư vấn gì ạ?”</span>
+      </span>
+      <span class="music-action" id="guideAction" aria-hidden="true">▶ Nghe</span>
+    </button>
+
+    <section class="links" aria-label="Liên kết chính">
+      <a class="link-card featured" href="https://shopgithub.io/" target="_blank" rel="noopener">
+        <span class="icon">🛒</span>
+        <span class="link-copy">
+          <strong>Mở lại website</strong>
+          <span>shopgithub.io · Cổng truy cập chính thức</span>
+        </span>
+        <span class="arrow">›</span>
+      </a>
+
+      <a class="link-card" href="https://zalo.me/0399932264" target="_blank" rel="noopener">
+        <span class="icon">💬</span>
+        <span class="link-copy">
+          <strong>Kết nối Zalo tư vấn</strong>
+          <span>Xin chào! Bạn muốn tư vấn gì ạ?</span>
+        </span>
+        <span class="arrow">›</span>
+      </a>
+
+      <a class="link-card" href="https://shopgithub.io" target="_blank" rel="noopener">
+        <span class="icon">🌐</span>
+        <span class="link-copy">
+          <strong>shopgithub.io</strong>
+          <span>Truy cập tên miền chính thức</span>
+        </span>
+        <span class="arrow">›</span>
+      </a>
+
+      <a class="link-card" href="https://ff.garena.com/" target="_blank" rel="noopener">
+        <span class="icon">🔥</span>
+        <span class="link-copy">
+          <strong>Free Fire</strong>
+          <span>Trang chủ Free Fire chính thức</span>
+        </span>
+        <span class="arrow">›</span>
+      </a>
+
+      <a class="link-card" href="https://www.tiktok.com/@vn.nhm80?_r=1&amp;_t=ZS-9BbXxPTgrlo" target="_blank" rel="noopener">
+        <span class="icon">♪</span>
+        <span class="link-copy">
+          <strong>TikTok</strong>
+          <span>@vn.nhm80 · Theo dõi mình</span>
+        </span>
+        <span class="arrow">›</span>
+      </a>
+
+      <button class="link-card" type="button" id="copyAccount">
+        <span class="icon">🏦</span>
+        <span class="link-copy">
+          <strong>Sao chép số ZaloPay</strong>
+          <span>ZaloPay · 0967210632</span>
+        </span>
+        <span class="arrow">⧉</span>
+      </button>
+    </section>
+
+    <div class="stats">
+      <div class="stat"><strong>4.9/5</strong><span>Đánh giá</span></div>
+      <div class="stat"><strong>500+</strong><span>Khách hàng</span></div>
+      <div class="stat"><strong>100%</strong><span>An toàn</span></div>
+    </div>
+
+    <section class="shop-section" id="shop" aria-label="Sản phẩm nổi bật">
+      <div class="shop-heading">
+        <h2>Sản phẩm nổi bật</h2>
+        <span>Giá từ</span>
+      </div>
+      <div class="shop-grid">
+        <article class="shop-card">
+          <div class="shop-cover" style="--a:#555555;--b:#111111">📱</div>
+          <div class="shop-info">
+            <strong>Fiza</strong>
+            <div class="shop-bottom">
+              <span class="shop-price">Từ 50.000đ</span>
+              <a class="shop-order" href="https://zalo.me/0967210632" target="_blank" rel="noopener">Đặt ngay</a>
+            </div>
+          </div>
+        </article>
+        <article class="shop-card">
+          <div class="shop-cover" style="--a:#777777;--b:#222222">🧩</div>
+          <div class="shop-info">
+            <strong>Mod</strong>
+            <div class="shop-bottom">
+              <span class="shop-price">Từ 50.000đ</span>
+              <a class="shop-order" href="https://zalo.me/0967210632" target="_blank" rel="noopener">Đặt ngay</a>
+            </div>
+          </div>
+        </article>
+        <article class="shop-card">
+          <div class="shop-cover" style="--a:#666666;--b:#111111">🌐</div>
+          <div class="shop-info">
+            <strong>Proxy</strong>
+            <div class="shop-bottom">
+              <span class="shop-price">Từ 50.000đ</span>
+              <a class="shop-order" href="https://zalo.me/0967210632" target="_blank" rel="noopener">Đặt ngay</a>
+            </div>
+          </div>
+        </article>
+        <article class="shop-card">
+          <div class="shop-cover" style="--a:#888888;--b:#222222">📄</div>
+          <div class="shop-info">
+            <strong>Make File</strong>
+            <div class="shop-bottom">
+              <span class="shop-price">Từ 50.000đ</span>
+              <a class="shop-order" href="https://zalo.me/0967210632" target="_blank" rel="noopener">Đặt ngay</a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <footer>© 2026 Vân Nhâm Shop · Roblox Creative Store</footer>
+  </main>
+
+  <div class="toast" id="toast" role="status">Đã sao chép số ZaloPay</div>
+
+  <script>
+    const themeAudio = document.getElementById("themeAudio");
+    const musicToggle = document.getElementById("musicToggle");
+    const musicStatus = document.getElementById("musicStatus");
+    const musicAction = document.getElementById("musicAction");
+    const guideToggle = document.getElementById("guideToggle");
+    const guideStatus = document.getElementById("guideStatus");
+    const guideAction = document.getElementById("guideAction");
+    let guideUtterance = null;
+
+    musicToggle.addEventListener("click", async () => {
+      if (themeAudio.paused) {
+        try {
+          await themeAudio.play();
+          musicToggle.setAttribute("aria-pressed", "true");
+          musicStatus.textContent = "Thazh x Đông Remix · Đang phát";
+          musicAction.textContent = "❚❚ Tạm dừng";
+        } catch (error) {
+          musicStatus.textContent = "Không phát được nhạc. Vui lòng thử lại.";
+          console.error("Không thể phát nhạc:", error);
+        }
+      } else {
+        themeAudio.pause();
+        musicToggle.setAttribute("aria-pressed", "false");
+        musicStatus.textContent = "Thazh x Đông Remix · Đã tạm dừng";
+        musicAction.textContent = "▶ Phát";
+      }
+    });
+
+    guideToggle.addEventListener("click", () => {
+      if (!("speechSynthesis" in window)) {
+        guideStatus.textContent = "Trình duyệt này không hỗ trợ phát giọng nói.";
+        return;
+      }
+
+      if (window.speechSynthesis.speaking) {
+        window.speechSynthesis.cancel();
+        guideToggle.setAttribute("aria-pressed", "false");
+        guideStatus.textContent = "“Xin chào, bạn muốn tư vấn gì ạ?”";
+        guideAction.textContent = "▶ Nghe";
+        return;
+      }
+
+      guideUtterance = new SpeechSynthesisUtterance(
+        "Xin chào, bạn muốn tư vấn gì ạ? Nhấn vào nút Kết nối Zalo tư vấn để nhắn tin với shop nhé."
+      );
+      guideUtterance.lang = "vi-VN";
+      const vietnameseVoice = window.speechSynthesis.getVoices().find(voice =>
+        voice.lang.toLowerCase().startsWith("vi")
+      );
+      if (vietnameseVoice) guideUtterance.voice = vietnameseVoice;
+      guideUtterance.onstart = () => {
+        guideToggle.setAttribute("aria-pressed", "true");
+        guideStatus.textContent = "Đang phát hướng dẫn tiếng Việt";
+        guideAction.textContent = "■ Dừng";
+      };
+      guideUtterance.onend = () => {
+        guideToggle.setAttribute("aria-pressed", "false");
+        guideStatus.textContent = "“Xin chào, bạn muốn tư vấn gì ạ?”";
+        guideAction.textContent = "▶ Nghe";
+        guideUtterance = null;
+      };
+      guideUtterance.onerror = event => {
+        guideToggle.setAttribute("aria-pressed", "false");
+        guideStatus.textContent = "Không phát được giọng nói: " + event.error;
+        guideAction.textContent = "▶ Nghe";
+        guideUtterance = null;
+      };
+      window.speechSynthesis.speak(guideUtterance);
+    });
+
+    document.getElementById("copyAccount").addEventListener("click", async () => {
+      const account = "0967210632";
+      try {
+        await navigator.clipboard.writeText(account);
+      } catch (_) {
+        const input = document.createElement("textarea");
+        input.value = account;
+        document.body.appendChild(input);
+        input.select();
+        document.execCommand("copy");
+        input.remove();
+      }
+
+      const toast = document.getElementById("toast");
+      toast.classList.add("show");
+      window.setTimeout(() => toast.classList.remove("show"), 2200);
+    });
+  </script>
+</body>
+</html>
